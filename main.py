@@ -7,30 +7,42 @@ def search_by_name(author_name):
     if author:
         quotes = Quote.objects(author=author)
         for quote in quotes:
-            print(quote.quote)
+            return quote.quote
     else:
-        print(f"Автор {author_name} не знайдений")
+        print(f"Автор {author_name} не знайдений.")
 
-search_by_name("Steve Martin")
+def search_by_tag(tag):
+    res = []
+    tegs_quotes = Quote.objects(tags=tag).all()
+    for el in tegs_quotes:
+        res.append(el.quote)
+    return res
+
+def search_by_tags(args):
+    tag1, tag2 = args.split(',')
+    res = []
+    tegs_quotes = Quote.objects(tags__in=[tag1, tag2]).all()
+    for el in tegs_quotes:
+        res.append(el.quote)
+    return res
 
 
+if __name__ == "__main__":
+    while True:
+        user_input = input("Надайте команду та аргументи: ")
+        if not user_input:
+            continue
+        command, *args = user_input.strip().split(': ', 1)
+        
+        if command == 'exit':
+            break
 
-# if __name__ == "__main__":
-#     while True:
-#         user_input = input("Надайте команду та аргументи: ")
-#         if user_input is None:
-#             continue
-#         command, *args = user_input.split(':')
-#         print(f'command:{command}')
-#         print(f'args: {args}')
-#         if command == 'exit':
-#             break
-
-#         if command == 'name':
-#             search_from_db()
-#         elif command == 'tag':
-#             pass
-#         elif command == 'tags':
-#             pass
+        if command == 'name':
+            res = search_by_name(*args)
+        elif command == 'tag':
+            res = search_by_tag(*args)
+        elif command == 'tags':
+            res = search_by_tags(*args)
+        print(res)
         
 
