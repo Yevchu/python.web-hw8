@@ -4,7 +4,6 @@ from bson import ObjectId
 
 
 class Author(Document):
-    _id = ObjectId()
     fullname = StringField()
     born_date = StringField()
     born_location = StringField()
