@@ -3,13 +3,16 @@ import connect
 
 
 def search_by_name(author_name):
+    quote_list = []
     author = Author.objects(fullname=author_name).first()
     if author:
         quotes = Quote.objects(author=author)
         for quote in quotes:
-            return quote.quote
+            quote_list.append(quote.quote)
     else:
         print(f"Автор {author_name} не знайдений.")
+    return quote_list
+
 
 def search_by_tag(tag):
     res = []

@@ -11,4 +11,5 @@ with open('./json/authors.json', 'r') as f:
 with open('./json/qoutes.json', 'r') as f:
     quotes_list = json.load(f)
     for quote in quotes_list:
+        quote['author'] = Author.objects(fullname=quote['author']).first()
         quote_to_db = Quote(**quote).save()
